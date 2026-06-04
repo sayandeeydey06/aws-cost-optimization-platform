@@ -192,14 +192,13 @@ Workflow File:
 
 screenshots/dashboard.png
 
-## Recommendations
+### Recommendations
 
-![Recommendations](screenshots/recommendations.png)
+screenshots/recommendations.png
 
-## GitHub Actions CI/CD
+### CI/CD PIPELINE
 
-![CI/CD](screenshots/githubActions.png)
-
+screenshots/githubAction.png
 
 ### PDF Report
 

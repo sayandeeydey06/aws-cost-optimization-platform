@@ -2,3 +2,6 @@ venv/
 __pycache__/
 *.pyc
 .env
+
+backend/aws_cost_report.pdf
+backend/test_*.py

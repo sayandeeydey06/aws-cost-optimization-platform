@@ -1,6 +1,7 @@
 from services.ec2_service import get_ec2_instances
 from services.ebs_service import get_unattached_volumes
-from services.pricing_service import get_monthly_cost
+from services.s3_service import get_s3_buckets
+from services.ai_service import generate_ai_recommendation
 
 
 def get_recommendations():
@@ -16,9 +17,10 @@ def get_recommendations():
 
         if cpu < 5:
 
-            monthly_cost = get_monthly_cost(
-                instance["instance_type"]
-            )
+            try:
+                ai_text = generate_ai_recommendation(instance)
+            except Exception:
+                ai_text = "AI recommendation unavailable"
 
             recommendations.append({
                 "resource": "EC2",
@@ -27,7 +29,8 @@ def get_recommendations():
                 "recommendation": "Idle EC2 Instance",
                 "action": "Consider stopping or downsizing",
                 "cpu_utilization": cpu,
-                "estimated_savings": f"${monthly_cost}/month"
+                "estimated_savings": "$7.5/month",
+                "ai_recommendation": ai_text
             })
 
     # EBS Recommendations
@@ -38,9 +41,20 @@ def get_recommendations():
         recommendations.append({
             "resource": "EBS",
             "volume_id": volume["volume_id"],
-            "size_gb": volume["size_gb"],
-            "recommendation": "Delete unattached volume",
-            "action": "Volume is not attached to any EC2 instance",
+            "recommendation": "Unattached EBS Volume",
+            "action": "Delete unused volume",
+            "estimated_savings": "$2/month"
+        })
+
+    # S3 Recommendations
+    buckets = get_s3_buckets()
+
+    if len(buckets) > 3:
+
+        recommendations.append({
+            "resource": "S3",
+            "recommendation": "Multiple S3 Buckets Detected",
+            "action": "Review unused buckets and enable lifecycle policies",
             "estimated_savings": "$1-$5/month"
         })
 

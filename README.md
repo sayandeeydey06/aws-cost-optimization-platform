@@ -2,6 +2,10 @@
 
 A full-stack cloud cost optimization platform that analyzes AWS resources, identifies cost-saving opportunities, and generates actionable recommendations through an interactive dashboard.
 
+## Dashboard Preview
+
+![Dashboard](screenshots/dashboard.png)
+
 ## Features
 
 * AWS Cost Explorer Integration

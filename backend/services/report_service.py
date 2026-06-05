@@ -21,13 +21,25 @@ def generate_report():
 
     for item in recommendations:
 
-        savings = item["estimated_savings"]
+        savings = item.get("estimated_savings", 0)
 
         if isinstance(savings, str):
 
             savings = savings.replace("$", "")
             savings = savings.replace("/month", "")
-            savings = float(savings)
+            savings = savings.strip()
+
+            # Handle values like "1-5"
+            if "-" in savings:
+                try:
+                    savings = savings.split("-")[-1]
+                except:
+                    savings = "0"
+
+            try:
+                savings = float(savings)
+            except:
+                savings = 0
 
         total_savings += savings
 

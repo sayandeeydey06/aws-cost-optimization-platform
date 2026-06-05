@@ -167,6 +167,25 @@ Backend:
 http://localhost:8000/docs
 ```
 
+
+## Deployment
+
+| Service              | URL                                                                        |
+| -------------------- | -------------------------------------------------------------------------- |
+| Frontend Dashboard   | http://aws-cost-optimization-dashboard.s3-website.ap-south-1.amazonaws.com |
+| Backend API          | http://13.233.130.128:8000                                                 |
+| Cost Report Endpoint | http://13.233.130.128:8000/report                                          |
+| PDF Report Download  | http://13.233.130.128:8000/report/pdf                                      |
+
+### Infrastructure
+
+* Frontend: Amazon S3 Static Website Hosting
+* Backend: Dockerized FastAPI on Amazon EC2
+* CI/CD: GitHub Actions
+* Cloud Services: AWS Cost Explorer, EC2, S3, CloudWatch
+* AI Integration: OpenAI API
+
+
 ---
 
 ## CI/CD

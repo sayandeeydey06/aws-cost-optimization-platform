@@ -9,7 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from services.pdf_service import create_pdf_report
 from pydantic import BaseModel
-from agent.aws_agent_v2 import llm_with_tools, tool_map
+from agent.aws_agent_v2 import ask_agent
 from agent.aws_agent import ask_agent
 
 app = FastAPI()

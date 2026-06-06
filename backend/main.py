@@ -68,41 +68,6 @@ def download_report():
 
 @app.post("/chat")
 def chat(request: ChatRequest):
-
-    question = request.message
-
-    response = llm_with_tools.invoke(question)
-
-    if response.tool_calls:
-
-        tool_name = response.tool_calls[0]["name"]
-
-        tool = tool_map[tool_name]
-
-        tool_result = tool.invoke({})
-
-        final_prompt = f"""
-        User Question:
-        {question}
-
-        Tool Result:
-        {tool_result}
-
-        Explain the result and give recommendations.
-        """
-
-        final_answer = llm_with_tools.invoke(final_prompt)
-
-        return {
-            "answer": final_answer.content
-        }
-
-    return {
-        "answer": response.content
-    }
-
-@app.post("/chat")
-def chat(request: ChatRequest):
     response = ask_agent(request.question)
 
     return {

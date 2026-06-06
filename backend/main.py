@@ -103,8 +103,8 @@ def chat(request: ChatRequest):
 
 @app.post("/chat")
 def chat(request: ChatRequest):
-    answer = ask_agent(request.question)
+    response = ask_agent(request.question)
 
     return {
-        "response": answer
+        "response": response
     }

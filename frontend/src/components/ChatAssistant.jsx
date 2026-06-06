@@ -13,10 +13,10 @@ function ChatAssistant() {
 
     try {
       const response = await API.post("/chat", {
-        message: message,
-      });
+  question: message,
+});
 
-      setAnswer(response.data.answer);
+      setAnswer(response.data.response);
     } catch (error) {
       console.error(error);
       setAnswer("Error communicating with AI Agent.");

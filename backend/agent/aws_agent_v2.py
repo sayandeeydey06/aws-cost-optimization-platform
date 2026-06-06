@@ -67,54 +67,25 @@ AWS Data:
 {tool_result}
 
 Rules:
+- Use ONLY the AWS data provided.
+- Do NOT make assumptions.
+- Keep the answer under 200 words.
+- Be concise and professional.
+- If data is unavailable, clearly say so.
 
-1. Answer ONLY what the user asked.
-2. Do NOT dump raw AWS data unless specifically requested.
-3. Summarize findings.
-4. Give cost optimization recommendations.
-5. Use markdown formatting.
-6. Keep answer under 200 words.
+Format:
 
-Examples:
+## Summary
+2-3 lines.
 
-Question:
-"What is my AWS monthly cost?"
+## Findings
+Bullet points.
 
-Answer:
-## Monthly Cost
+## Recommendations
+3 actionable recommendations maximum.
 
-Your current AWS monthly cost is approximately $0.00.
-
-## Analysis
-
-You are currently operating within Free Tier limits.
-
-## Recommendation
-
-Continue monitoring usage and configure AWS Budgets alerts.
-
-
-Question:
-"Show my EC2 instances"
-
-Answer:
-## EC2 Summary
-
-You currently have 4 running EC2 instances.
-
-All instances are t3.micro and have very low CPU utilization (<1%).
-
-## Cost Optimization
-
-These instances appear underutilized.
-
-## Recommendation
-
-- Stop unused instances
-- Schedule non-production instances
-- Consider Reserved Instances if long-term usage is expected
-
-Generate the response now.
+## Estimated Savings
+If applicable.
 """
     final_answer = llm.invoke(final_prompt)
 

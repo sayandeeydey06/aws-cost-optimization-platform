@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import API from "../services/api";
 import CostChart from "../components/CostChart";
+import ChatAssistant from "../components/ChatAssistant";
 
 function Dashboard() {
   const [report, setReport] = useState(null);
@@ -62,14 +63,14 @@ function Dashboard() {
   </p>
 </div>
 
-      <div className="bg-white rounded-xl shadow p-6">
+           <div className="bg-white rounded-xl shadow p-6">
         <h2 className="text-2xl font-bold mb-4">
           Optimization Recommendations
         </h2>
 
-    <div className="mt-8">
-  <CostChart report={report} />
-</div>
+        <div className="mt-8">
+          <CostChart report={report} />
+        </div>
 
         {report.recommendations.map((item, index) => (
           <div
@@ -88,6 +89,12 @@ function Dashboard() {
           </div>
         ))}
       </div>
+
+      {/* AI Agent */}
+      <div className="mt-8">
+        <ChatAssistant />
+      </div>
+
     </div>
   );
 }

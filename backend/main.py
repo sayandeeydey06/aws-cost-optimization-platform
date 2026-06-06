@@ -8,6 +8,8 @@ from services.report_service import generate_report
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from services.pdf_service import create_pdf_report
+from pydantic import BaseModel
+from agent.aws_agent_v2 import llm_with_tools, tool_map
 
 app = FastAPI()
 
@@ -19,6 +21,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+class ChatRequest(BaseModel):
+    message: str
+
+
 @app.get("/")
 def home():
     return {"message": "AWS Cost Optimization Agent Running"}
@@ -57,3 +64,39 @@ def download_report():
         media_type="application/pdf",
         filename="AWS_Cost_Report.pdf"
     )
+
+
+@app.post("/chat")
+def chat(request: ChatRequest):
+
+    question = request.message
+
+    response = llm_with_tools.invoke(question)
+
+    if response.tool_calls:
+
+        tool_name = response.tool_calls[0]["name"]
+
+        tool = tool_map[tool_name]
+
+        tool_result = tool.invoke({})
+
+        final_prompt = f"""
+        User Question:
+        {question}
+
+        Tool Result:
+        {tool_result}
+
+        Explain the result and give recommendations.
+        """
+
+        final_answer = llm_with_tools.invoke(final_prompt)
+
+        return {
+            "answer": final_answer.content
+        }
+
+    return {
+        "answer": response.content
+    }

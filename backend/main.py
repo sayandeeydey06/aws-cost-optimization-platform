@@ -23,7 +23,7 @@ app.add_middleware(
 )
 
 class ChatRequest(BaseModel):
-    message: str
+    question: str
 
 
 @app.get("/")
@@ -99,4 +99,12 @@ def chat(request: ChatRequest):
 
     return {
         "answer": response.content
+    }
+
+@app.post("/chat")
+def chat(request: ChatRequest):
+    answer = ask_agent(request.question)
+
+    return {
+        "response": answer
     }

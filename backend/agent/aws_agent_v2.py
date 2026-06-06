@@ -58,7 +58,7 @@ def ask_agent(question: str):
     print(f"\nTool Result:\n{tool_result}")
 
     final_prompt = f"""
-You are an AWS Cost Optimization Expert.
+You are a Senior AWS FinOps Engineer.
 
 User Question:
 {question}
@@ -66,31 +66,56 @@ User Question:
 AWS Data:
 {tool_result}
 
-Provide the answer in the following format:
+Rules:
 
-## Summary
+1. Answer ONLY what the user asked.
+2. Do NOT dump raw AWS data unless specifically requested.
+3. Summarize findings.
+4. Give cost optimization recommendations.
+5. Use markdown formatting.
+6. Keep answer under 200 words.
 
-Short explanation.
+Examples:
 
-## Findings
+Question:
+"What is my AWS monthly cost?"
 
-Explain what was discovered.
+Answer:
+## Monthly Cost
 
-## Cost Impact
+Your current AWS monthly cost is approximately $0.00.
 
-Mention any costs or savings.
+## Analysis
 
-## Recommendations
+You are currently operating within Free Tier limits.
 
-Provide practical AWS recommendations.
+## Recommendation
 
-## Next Actions
+Continue monitoring usage and configure AWS Budgets alerts.
 
-Provide clear next steps.
 
-Keep the answer professional and concise.
+Question:
+"Show my EC2 instances"
+
+Answer:
+## EC2 Summary
+
+You currently have 4 running EC2 instances.
+
+All instances are t3.micro and have very low CPU utilization (<1%).
+
+## Cost Optimization
+
+These instances appear underutilized.
+
+## Recommendation
+
+- Stop unused instances
+- Schedule non-production instances
+- Consider Reserved Instances if long-term usage is expected
+
+Generate the response now.
 """
-
     final_answer = llm.invoke(final_prompt)
 
     return final_answer.content

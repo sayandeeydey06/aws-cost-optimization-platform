@@ -10,8 +10,6 @@ from fastapi.responses import FileResponse
 from services.pdf_service import create_pdf_report
 from pydantic import BaseModel
 from agent.aws_agent_v2 import ask_agent
-from agent.aws_agent import ask_agent
-
 app = FastAPI()
 
 
@@ -71,6 +69,4 @@ def download_report():
 def chat(request: ChatRequest):
     response = ask_agent(request.question)
 
-    return {
-        "response": response
-    }
+    return response

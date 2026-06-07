@@ -21,7 +21,8 @@ function ChatAssistant() {
         ...prev,
         {
           question: message,
-          answer: response.data.response,
+         answer: response.data.answer,
+         tool: response.data.tool_used,
         },
       ]);
 
@@ -126,9 +127,22 @@ function ChatAssistant() {
             textAlign: "left",
           }}
         >
-          <ReactMarkdown>
-            {chat.answer}
-          </ReactMarkdown>
+<div
+  style={{
+    fontSize: "12px",
+    marginBottom: "10px",
+    display: "inline-block",
+    background: "#e0f2fe",
+    padding: "4px 8px",
+    borderRadius: "20px",
+  }}
+>
+  Tool Used: {chat.tool}
+</div>
+
+<ReactMarkdown>
+  {chat.answer}
+</ReactMarkdown>
         </div>
       </div>
 

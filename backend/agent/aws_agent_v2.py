@@ -47,7 +47,10 @@ def ask_agent(question: str):
         if response.tool_calls:
             tool_name = response.tool_calls[0]["name"]
         else:
-            return response.content
+            return {
+    "answer": response.content,
+    "tool_used": "none"
+}
 
     print(f"\nTool Called: {tool_name}")
 
@@ -89,4 +92,8 @@ If applicable.
 """
     final_answer = llm.invoke(final_prompt)
 
-    return final_answer.content
+    return {
+    "answer": final_answer.content,
+    "tool_used": tool_name
+}
+

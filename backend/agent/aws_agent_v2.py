@@ -9,6 +9,7 @@ from tools.ec2_tool import ec2_tool
 from tools.ebs_tool import ebs_tool
 from tools.s3_tool import s3_tool
 from tools.rds_tool import rds_tool
+from tools.lambda_tool import lambda_tool
 
 
 # =========================
@@ -43,6 +44,11 @@ def aws_rds():
     """Get RDS database instances."""
     return str(rds_tool())
 
+@tool
+def aws_lambda():
+    """Get Lambda functions."""
+    return str(lambda_tool())
+
 
 # =========================
 # GEMINI MODEL
@@ -64,6 +70,7 @@ tool_map = {
     "aws_ebs": aws_ebs,
     "aws_s3": aws_s3,
     "aws_rds": aws_rds,
+    "aws_lambda": aws_lambda,
 }
 
 # =========================
@@ -109,6 +116,14 @@ def ask_agent(question: str):
     "rds", "database", "databases", "db"
     ]):
         tool_name = "aws_rds"
+
+    elif any(word in question_lower for word in [
+    "lambda",
+    "serverless",
+    "function",
+    "functions"
+]):
+     tool_name = "aws_lambda"
 
     else:
         # Let Gemini decide

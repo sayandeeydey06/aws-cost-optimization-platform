@@ -1,56 +1,115 @@
+from dotenv import load_dotenv
+load_dotenv()
+
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_core.tools import tool
+
+from tools.cost_tool import cost_tool
+from tools.ec2_tool import ec2_tool
+from tools.ebs_tool import ebs_tool
+from tools.s3_tool import s3_tool
+
+
+# =========================
+# AWS TOOLS
+# =========================
+
+@tool
+def aws_cost():
+    """Get current AWS monthly cost."""
+    return str(cost_tool())
+
+
+@tool
+def aws_ec2():
+    """Get EC2 instances."""
+    return str(ec2_tool())
+
+
+@tool
+def aws_ebs():
+    """Get unattached EBS volumes."""
+    return str(ebs_tool())
+
+
+@tool
+def aws_s3():
+    """Get S3 buckets."""
+    return str(s3_tool())
+
+
+# =========================
+# GEMINI MODEL
+# =========================
+
+llm = ChatGoogleGenerativeAI(
+    model="gemini-2.5-flash",
+    temperature=0
+)
+
+
+# =========================
+# TOOL REGISTRY
+# =========================
+
+tool_map = {
+    "aws_cost": aws_cost,
+    "aws_ec2": aws_ec2,
+    "aws_ebs": aws_ebs,
+    "aws_s3": aws_s3,
+}
+
+
+# =========================
+# TOOL CALLING MODEL
+# =========================
+
+llm_with_tools = llm.bind_tools(
+    [aws_cost, aws_ec2, aws_ebs, aws_s3]
+)
+
+
+# =========================
+# AGENT
+# =========================
+
 def ask_agent(question: str):
 
     question_lower = question.lower()
 
-    # =========================
-    # TOOL ROUTING
-    # =========================
-
+    # Manual routing first
     if any(word in question_lower for word in [
-        "cost",
-        "billing",
-        "bill",
-        "monthly cost",
-        "spending",
-        "expense"
+        "cost", "billing", "bill", "monthly cost",
+        "spending", "expense"
     ]):
         tool_name = "aws_cost"
 
     elif any(word in question_lower for word in [
-        "ec2",
-        "instance",
-        "instances",
-        "server"
+        "ec2", "instance", "instances", "server"
     ]):
         tool_name = "aws_ec2"
 
     elif any(word in question_lower for word in [
-        "ebs",
-        "volume",
-        "volumes",
-        "disk",
-        "storage volume"
+        "ebs", "volume", "volumes", "disk"
     ]):
         tool_name = "aws_ebs"
 
     elif any(word in question_lower for word in [
-        "s3",
-        "bucket",
-        "buckets"
+        "s3", "bucket", "buckets"
     ]):
         tool_name = "aws_s3"
 
     else:
-        # fallback to Gemini tool calling
+        # Let Gemini decide
         response = llm_with_tools.invoke(question)
 
         if response.tool_calls:
             tool_name = response.tool_calls[0]["name"]
         else:
             return {
-    "answer": response.content,
-    "tool_used": "none"
-}
+                "answer": response.content,
+                "tool_used": "none"
+            }
 
     print(f"\nTool Called: {tool_name}")
 
@@ -85,15 +144,15 @@ Format:
 Bullet points.
 
 ## Recommendations
-3 actionable recommendations maximum.
+Maximum 3 recommendations.
 
 ## Estimated Savings
-If applicable.
+Only if applicable.
 """
+
     final_answer = llm.invoke(final_prompt)
 
     return {
-    "answer": final_answer.content,
-    "tool_used": tool_name
-}
-
+        "answer": final_answer.content,
+        "tool_used": tool_name
+    }

@@ -8,6 +8,7 @@ from tools.cost_tool import cost_tool
 from tools.ec2_tool import ec2_tool
 from tools.ebs_tool import ebs_tool
 from tools.s3_tool import s3_tool
+from tools.rds_tool import rds_tool
 
 
 # =========================
@@ -37,6 +38,11 @@ def aws_s3():
     """Get S3 buckets."""
     return str(s3_tool())
 
+@tool
+def aws_rds():
+    """Get RDS database instances."""
+    return str(rds_tool())
+
 
 # =========================
 # GEMINI MODEL
@@ -57,15 +63,15 @@ tool_map = {
     "aws_ec2": aws_ec2,
     "aws_ebs": aws_ebs,
     "aws_s3": aws_s3,
+    "aws_rds": aws_rds,
 }
-
 
 # =========================
 # TOOL CALLING MODEL
 # =========================
 
 llm_with_tools = llm.bind_tools(
-    [aws_cost, aws_ec2, aws_ebs, aws_s3]
+    [aws_cost, aws_ec2, aws_ebs, aws_s3, aws_rds]
 )
 
 
@@ -98,6 +104,11 @@ def ask_agent(question: str):
         "s3", "bucket", "buckets"
     ]):
         tool_name = "aws_s3"
+
+    elif any(word in question_lower for word in [
+    "rds", "database", "databases", "db"
+    ]):
+        tool_name = "aws_rds"
 
     else:
         # Let Gemini decide

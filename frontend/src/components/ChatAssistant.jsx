@@ -80,46 +80,61 @@ function ChatAssistant() {
             cursor: "pointer",
           }}
         >
-          {loading ? "Thinking..." : "Ask Agent"}
+         {loading ? "Analyzing AWS..." : "Ask Agent"}
         </button>
       </div>
 
       <div style={{ marginTop: "20px" }}>
-        {chatHistory.map((chat, index) => (
-          <div
-            key={index}
-            style={{
-              marginBottom: "20px",
-            }}
-          >
-            <div
-              style={{
-                background: "#dbeafe",
-                padding: "12px",
-                borderRadius: "10px",
-                marginBottom: "10px",
-              }}
-            >
-              <strong>You:</strong> {chat.question}
-            </div>
+  {chatHistory.map((chat, index) => (
+    <div key={index}>
 
-            <div
-              style={{
-                background: "#f3f4f6",
-                padding: "12px",
-                borderRadius: "10px",
-                textAlign: "left",
-              }}
-            >
-              <strong>AI Agent:</strong>
-
-              <ReactMarkdown>
-                {chat.answer}
-              </ReactMarkdown>
-            </div>
-          </div>
-        ))}
+      {/* User Message */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          marginBottom: "10px",
+        }}
+      >
+        <div
+          style={{
+            background: "#2563eb",
+            color: "white",
+            padding: "12px",
+            borderRadius: "12px",
+            maxWidth: "70%",
+          }}
+        >
+          {chat.question}
+        </div>
       </div>
+
+      {/* AI Message */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          marginBottom: "20px",
+        }}
+      >
+        <div
+          style={{
+            background: "#f3f4f6",
+            padding: "12px",
+            borderRadius: "12px",
+            maxWidth: "80%",
+            textAlign: "left",
+          }}
+        >
+          <ReactMarkdown>
+            {chat.answer}
+          </ReactMarkdown>
+        </div>
+      </div>
+
+    </div>
+  ))}
+</div>
     </div>
   );
 }

@@ -6,6 +6,11 @@ A full-stack cloud cost optimization platform that analyzes AWS resources, ident
 
 ![Dashboard](screenshots/dashboard.png)
 
+
+## AI Assistant
+
+![AI Assistant](screenshots/ai-chat.png)
+
 ## Features
 
 * AWS Cost Explorer Integration
@@ -14,7 +19,7 @@ A full-stack cloud cost optimization platform that analyzes AWS resources, ident
 * EBS Volume Analysis
 * S3 Bucket Discovery
 * Cost Optimization Recommendations
-* AI-Powered Recommendation Support
+* AI-Powered AWS Assistant
 * PDF Report Generation
 * Interactive React Dashboard
 * Docker Containerization
@@ -22,22 +27,65 @@ A full-stack cloud cost optimization platform that analyzes AWS resources, ident
 
 ---
 
+### Project Metrics
+* 5+ AWS Services Integrated
+* AI-Powered Cost Analysis
+* Dockerized Deployment
+* GitHub Actions CI/CD
+* Real-Time Resource Discovery
+* Executive PDF Reporting
+
 ## Architecture
 
 ```text
-React Dashboard
+React Dashboard (S3)
        │
        ▼
-FastAPI Backend
+FastAPI Backend (Docker on EC2)
        │
        ▼
 AWS Services
-├── Cost Explorer
-├── EC2
-├── CloudWatch
-├── EBS
-└── S3
+ ├── Cost Explorer 
+ ├── EC2 
+ ├── CloudWatch 
+ ├── EBS 
+ ├── S3 
+ └── Gemini AI Agent
 ```
+
+
+## Architecture Diagram
+
+![Architecture](screenshots/architecture.png)
+
+
+### AI Agent Capabilities
+
+The AI assistant can answer:
+
+* What is my AWS monthly cost?
+* Show my EC2 instances
+* List unattached EBS volumes
+* Show S3 buckets
+* Give AWS cost optimization recommendations
+
+The AI Agent uses:
+
+* Google Gemini 2.5 Flash
+* LangChain Tool Calling
+* AWS SDK (Boto3)
+
+to dynamically fetch AWS account information and generate FinOps recommendations.
+
+### Example Questions
+
+Try asking:
+
+* What is my AWS monthly cost?
+* Show all EC2 instances
+* List unattached EBS volumes
+* Show my S3 buckets
+* Give AWS cost optimization recommendations
 
 ---
 
@@ -56,6 +104,10 @@ AWS Services
 * Python
 * Boto3
 * ReportLab
+
+### AI Layer
+* Google Gemini 2.5 Flash
+* LangChain Tool Calling
 
 ### AWS Services
 
@@ -111,7 +163,7 @@ AWS Services
 | `/recommendations` | Optimization Recommendations |
 | `/report`          | Executive Report             |
 | `/report/pdf`      | Download PDF Report          |
-
+| `/chat`            | AI Assistant                 |
 ---
 
 ## Local Setup
@@ -154,13 +206,11 @@ npm run dev
 ```bash
 docker compose up --build
 ```
-
 Frontend:
 
 ```text
 http://localhost:5173
 ```
-
 Backend:
 
 ```text
@@ -183,7 +233,9 @@ http://localhost:8000/docs
 * Backend: Dockerized FastAPI on Amazon EC2
 * CI/CD: GitHub Actions
 * Cloud Services: AWS Cost Explorer, EC2, S3, CloudWatch
-* AI Integration: OpenAI API
+* AI Integration:
+    - Google Gemini 2.5 Flash
+    - LangChain Tool Calling
 
 
 ---
@@ -234,16 +286,9 @@ screenshots/pdf-report.png
 * AI-Powered Optimization Insights
 * CloudFront Deployment
 * ECS/Fargate Deployment
-
+* Multi-Account AWS Support
 ---
 
-## Resume Highlights
-
-* Developed a full-stack AWS Cost Optimization Platform using React, FastAPI, and AWS APIs.
-* Built automated cloud resource analysis and recommendation engine.
-* Implemented Docker containerization and GitHub Actions CI/CD pipelines.
-* Generated executive PDF reports and real-time dashboard analytics.
-* Integrated AWS Cost Explorer, CloudWatch, EC2, S3, and EBS services.
 
 ---
 

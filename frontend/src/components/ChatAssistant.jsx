@@ -4,7 +4,7 @@ import API from "../services/api";
 
 function ChatAssistant() {
   const [message, setMessage] = useState("");
-  const [answer, setAnswer] = useState("");
+  const [chatHistory, setChatHistory] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const sendMessage = async () => {
@@ -17,10 +17,25 @@ function ChatAssistant() {
         question: message,
       });
 
-      setAnswer(response.data.response);
+      setChatHistory((prev) => [
+        ...prev,
+        {
+          question: message,
+          answer: response.data.response,
+        },
+      ]);
+
+      setMessage("");
     } catch (error) {
       console.error(error);
-      setAnswer("Error communicating with AI Agent.");
+
+      setChatHistory((prev) => [
+        ...prev,
+        {
+          question: message,
+          answer: "Error communicating with AI Agent.",
+        },
+      ]);
     }
 
     setLoading(false);
@@ -69,25 +84,42 @@ function ChatAssistant() {
         </button>
       </div>
 
-      {answer && (
-        <div
-          style={{
-            marginTop: "20px",
-            padding: "20px",
-            border: "1px solid #ddd",
-            borderRadius: "12px",
-            background: "#fafafa",
-            textAlign: "left",
-            lineHeight: "1.7",
-          }}
-        >
-          <h3>Agent Response</h3>
+      <div style={{ marginTop: "20px" }}>
+        {chatHistory.map((chat, index) => (
+          <div
+            key={index}
+            style={{
+              marginBottom: "20px",
+            }}
+          >
+            <div
+              style={{
+                background: "#dbeafe",
+                padding: "12px",
+                borderRadius: "10px",
+                marginBottom: "10px",
+              }}
+            >
+              <strong>You:</strong> {chat.question}
+            </div>
 
-          <ReactMarkdown>
-            {answer}
-          </ReactMarkdown>
-        </div>
-      )}
+            <div
+              style={{
+                background: "#f3f4f6",
+                padding: "12px",
+                borderRadius: "10px",
+                textAlign: "left",
+              }}
+            >
+              <strong>AI Agent:</strong>
+
+              <ReactMarkdown>
+                {chat.answer}
+              </ReactMarkdown>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

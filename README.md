@@ -16,6 +16,19 @@ A full-stack cloud cost optimization platform that analyzes AWS resources, ident
 
 ![Architecture](screenshots/architecture.png)
 
+### PDF Report
+
+![PDF Report](screenshots/pdf-report.png)
+
+### Recommendations
+
+![Recommendations](screenshots/recommendations.png)
+
+### CI/CD PIPELINE
+
+![CI/CD Pipeline](screenshots/githubAction.png)
+
+
 ## Features
 
 * AWS Cost Explorer Integration

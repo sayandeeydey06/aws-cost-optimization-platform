@@ -11,6 +11,11 @@ A full-stack cloud cost optimization platform that analyzes AWS resources, ident
 
 ![AI Assistant](screenshots/ai-chat.png)
 
+
+## Architecture Diagram
+
+![Architecture](screenshots/architecture.png)
+
 ## Features
 
 * AWS Cost Explorer Integration
@@ -52,12 +57,6 @@ AWS Services
  ├── S3 
  └── Gemini AI Agent
 ```
-
-
-## Architecture Diagram
-
-![Architecture](screenshots/architecture.png)
-
 
 ### AI Agent Capabilities
 

@@ -266,27 +266,6 @@ Workflow File:
 ```text
 .github/workflows/ci.yml
 ```
-
----
-
-## Screenshots
-
-### Dashboard
-
-screenshots/dashboard.png
-
-### Recommendations
-
-screenshots/recommendations.png
-
-### CI/CD PIPELINE
-
-screenshots/githubAction.png
-
-### PDF Report
-
-screenshots/pdf-report.png
-
 ---
 
 ## Future Improvements
